@@ -1,26 +1,7 @@
 'use strict';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const goTo = (element) => element.scrollIntoView({behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start'});
-let openTimer;
-const openLetter = document.querySelector('#open-letter');
-if (openLetter) {
-  openLetter.addEventListener('click', () => {
-    const body = document.querySelector('#letter-body');
-    const alreadyOpen = openLetter.getAttribute('aria-expanded') === 'true';
-    openLetter.setAttribute('aria-expanded', 'true');
-    openLetter.classList.add('is-open');
-    openLetter.querySelector('.open-label').textContent = '信已展开 · 继续读 ↓';
-    body.hidden = false;
-    if (!alreadyOpen && !reducedMotion.matches) body.classList.add('section-enter');
-    clearTimeout(openTimer);
-    openTimer = setTimeout(() => {
-      goTo(document.querySelector('#flowers'));
-      const heading = document.querySelector('#flowers h2');
-      heading.setAttribute('tabindex', '-1');
-      heading.focus({preventScroll:true});
-    }, alreadyOpen || reducedMotion.matches ? 0 : 650);
-  });
-}
+const assetBase = new URL('./assets/', document.currentScript.src);
 const wishes = [
   {title:'愿你，常常开心。',label:'开心',photo:1,text:'不一定要发生多大的好事。\n一顿喜欢的饭，一场好天气，\n或者只是突然想笑的某一刻。\n愿这些小小的快乐，常常来找你。'},
   {title:'愿你，自在生长。',label:'自在',photo:4,text:'新的一岁，不用着急成为谁。\n可以慢慢来，可以改主意，\n也可以把时间花在喜欢的事情上。\n按你的心意生活，就很好。'},
@@ -39,7 +20,7 @@ if (dialog) {
       document.querySelector('#note-text').textContent = wish.text;
       document.querySelector('#note-number').textContent = `FLOWER 0${index+1} / ${wish.label}`;
       const image = document.querySelector('#note-image');
-      image.src = `../assets/floral-art-${wish.photo}-640.webp`;
+      image.src = new URL(`floral-art-${wish.photo}-640.webp`, assetBase).href;
       image.alt = `${wish.label}纸笺上的${wish.photo === 4 ? '奶白花篮水彩插画' : '浅粉花束水彩插画'}`;
       lastFlower = button;
       dialog.showModal();
@@ -68,7 +49,6 @@ if (dialog) {
 }
 document.querySelectorAll('a[href="#birthday"]').forEach(link => link.addEventListener('click', event => {
   event.preventDefault();
-  clearTimeout(openTimer);
   const section = document.querySelector('#birthday');
   goTo(section);
   const heading = document.querySelector('#birthday-title');
@@ -76,14 +56,6 @@ document.querySelectorAll('a[href="#birthday"]').forEach(link => link.addEventLi
   heading.focus({preventScroll:true});
 }));
 document.querySelector('[data-restart]')?.addEventListener('click', () => {
-  clearTimeout(openTimer);
-  if (openLetter) {
-    document.querySelector('#letter-body').hidden = true;
-    openLetter.setAttribute('aria-expanded','false');
-    openLetter.classList.remove('is-open');
-    openLetter.querySelector('.open-label').innerHTML = '拆开看看 <span aria-hidden="true">↗</span>';
-    openLetter.focus({preventScroll:true});
-  } else {
     visited.clear();
     document.querySelectorAll('[data-flower]').forEach((button,i) => {
       button.classList.remove('read');
@@ -93,6 +65,5 @@ document.querySelector('[data-restart]')?.addEventListener('click', () => {
     document.querySelectorAll('.progress-flowers span').forEach(span=>span.classList.remove('read'));
     document.querySelector('#progress').textContent = '四朵花，四份只给你的祝福';
     document.querySelector('[data-flower]').focus({preventScroll:true});
-  }
   goTo(document.querySelector('#top'));
 });
