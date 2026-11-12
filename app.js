@@ -68,6 +68,7 @@ if (dialog) {
 }
 document.querySelectorAll('a[href="#birthday"]').forEach(link => link.addEventListener('click', event => {
   event.preventDefault();
+  clearTimeout(openTimer);
   const section = document.querySelector('#birthday');
   goTo(section);
   const heading = document.querySelector('#birthday-title');
