@@ -39,8 +39,8 @@ if (dialog) {
       document.querySelector('#note-text').textContent = wish.text;
       document.querySelector('#note-number').textContent = `FLOWER 0${index+1} / ${wish.label}`;
       const image = document.querySelector('#note-image');
-      image.src = `../assets/flowers-${wish.photo}-640.webp`;
-      image.alt = `${wish.label}纸笺上的${wish.photo === 4 ? '奶白花篮' : '浅粉花束'}`;
+      image.src = `../assets/floral-art-${wish.photo}-640.webp`;
+      image.alt = `${wish.label}纸笺上的${wish.photo === 4 ? '奶白花篮水彩插画' : '浅粉花束水彩插画'}`;
       lastFlower = button;
       dialog.showModal();
       document.body.classList.add('scroll-locked');
