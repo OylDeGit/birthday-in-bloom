@@ -8,3 +8,5 @@
 /* Hide scrollbar chrome while keeping touch, wheel and keyboard scrolling. */
 html,body,dialog{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar,dialog::-webkit-scrollbar{display:none;width:0;height:0}
+/* Give detailed watercolor heads room inside the phone edges. */
+.garden-plants{margin-left:0;margin-right:0}.plant img{width:155%;left:-27.5%}.plant-1 img{left:-16%;transform:rotate(-7deg)}.plant-4 img{left:-45%;transform:rotate(7deg)}@media(min-width:600px){.garden-plants{margin-left:auto;margin-right:auto}}
