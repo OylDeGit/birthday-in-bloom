@@ -1,4 +1,13 @@
 'use strict';
+// A dialog may mark its automatically focused close button as focus-visible on iOS.
+// Keep the ring for keyboard navigation only; retain normal dialog focus management.
+const keyboardKeys = new Set(['Tab', 'Enter', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End']);
+document.addEventListener('keydown', event => {
+  if (keyboardKeys.has(event.key)) document.documentElement.setAttribute('data-keyboard-navigation', '');
+}, true);
+['pointerdown', 'touchstart', 'mousedown'].forEach(type => document.addEventListener(type, () => {
+  document.documentElement.removeAttribute('data-keyboard-navigation');
+}, {capture:true, passive:true}));
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const goTo = (element) => element.scrollIntoView({behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start'});
 const assetBase = new URL('./assets/', document.currentScript.src);

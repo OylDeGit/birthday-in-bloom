@@ -18,3 +18,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar,dialog::-webkit-scrollbar{displa
 
 /* Draw decorative hearts and the close icon without depending on font glyphs. */
 .heart-icon{display:block;width:16px;height:16px;fill:currentColor;flex:none}.progress-flowers span{display:inline-flex;align-items:center;justify-content:center}.little-flower .heart-icon{width:22px;height:22px;margin:0 auto}.close-note{display:grid;place-items:center;isolation:isolate;background:transparent;font-size:0}.close-note::before{content:'';position:absolute;inset:7px;border-radius:50%;background:#faf7eef0;z-index:-1}.close-note svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;fill:none}
+
+/* Do not draw an autofocus ring around the close button after a touch opening. */
+.close-note:focus,.close-note:focus-visible{outline:none}
+html[data-keyboard-navigation] .close-note:focus{outline:2px solid var(--pink);outline-offset:3px}
